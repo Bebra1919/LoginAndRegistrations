@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WpfApp2
 {
     public partial class MainWindow : Window
     {
+        public List<User> users = new List<User>();
         public MainWindow()
         {
             InitializeComponent();
+            users.Add(new User("admin", "1234"));
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -27,16 +17,19 @@ namespace WpfApp2
             string login = txtLogin.Text;
             string password = txtPassword.Password;
 
-
-            if (login == "admin" && password == "1234")
+            foreach (User user in users)
             {
-                MessageBox.Show("Вход выполнен успешно");
-            }
-            else
-            {
-                Exaption.Text = "Неправильный  логин или пароль";
+                if (user.Login == login && user.Password == password)
+                {
+                    MessageBox.Show("Вход выполнен успешно");
+                    if (user.Login != login && user.Password != password)
+                    {
+                        MessageBox.Show("Неправильный логин или пароль");
+                    }
+                }
             }
         }
+    
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -47,14 +40,57 @@ namespace WpfApp2
             string password = txtRegPassword.Password;
             string confirmPassword = txtRegPasswordConfirm.Password;
 
-            if (password == confirmPassword)
+            if (password == "" && name == "" && email == "" && (GenderM.IsChecked != true || GenderF.IsChecked != true))
             {
-                MessageBox.Show("Регистрация выполнена успешно");
+                MessageBox.Show("Пройдите регистрацию");
             }
-            else
+            else if (name == "")
             {
-                MessageBox.Show("Пароли не совпадают");
+                MessageBox.Show("Введите имя");
             }
+            else if (email == "")
+            {
+                MessageBox.Show("Введите Эл.Почту");
+            }else if (GenderM.IsChecked != true && GenderF.IsChecked != true)
+            {
+                MessageBox.Show("Укажите пол");
+            } else if (password == "")
+            {
+                MessageBox.Show("Введите пароль");
+            }else if (confirmPassword == "" || confirmPassword != password)
+            {
+                MessageBox.Show("Введите пароль повторно");
+            } else
+            {
+                if (GenderM.IsChecked == true)
+                {
+                    users.Add(new User(name, email, "Мужской", password));
+                    MessageBox.Show("Регистрация выполнена успешно");
+                    txtName.Text = "";
+                    txtEmail.Text = "";
+                    GenderM.IsChecked = false;
+                    txtRegPassword.Password = "";
+                    txtRegPasswordConfirm.Password = "";
+                    LogIn.IsSelected = true;
+                } else if (GenderF.IsChecked == true)
+                {
+                    users.Add(new User(name, email, "Женский", password));
+                    MessageBox.Show("Регистрация выполнена успешно");
+                    txtName.Text = "";
+                    txtEmail.Text = "";
+                    GenderM.IsChecked = false;
+                    txtRegPassword.Password = "";
+                    txtRegPasswordConfirm.Password = "";
+                    LogIn.IsSelected = true;
+                }
+            }
+
+
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

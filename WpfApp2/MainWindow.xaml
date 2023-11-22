@@ -7,8 +7,12 @@
         mc:Ignorable="d"
                Title="LodinAndRegistration" Height="250" Width="450">
     <Grid>
-        <TabControl>
-            <TabItem Header="Вход" IsSelected="True" BorderBrush="#FF5D1111">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.RowSpan="2">
+            <TabItem x:Name="LogIn" Header="Вход" IsSelected="True" BorderBrush="#FF5D1111">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color='DarkGreen'/>
@@ -51,8 +55,8 @@
 
                     <Label Content="Пол:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0"/>
                     <DockPanel x:Name="cmbGender" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,70,0,0" Width="200" Grid.Column="1">
-                        <RadioButton Margin="0,0,10,0">Мужской</RadioButton>
-                        <RadioButton>Женский</RadioButton>
+                        <RadioButton x:Name="GenderM" Margin="0,0,10,0" Checked="RadioButton_Checked">Мужской</RadioButton>
+                        <RadioButton x:Name="GenderF">Женский</RadioButton>
                     </DockPanel>
 
                     <Label Content="Пароль:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,100,0,0"/>
@@ -62,6 +66,8 @@
                     <PasswordBox x:Name="txtRegPasswordConfirm" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,130,0,0" Width="200" Grid.Column="1"/>
 
                     <Button Content="Зарегистрироваться" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="77,160,0,0" Click="Button_Click_1" Grid.ColumnSpan="2"/>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="19,185,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="9" Foreground="Red" VerticalAlignment="Top" Width="200"/>
+
                 </Grid>
             </TabItem>
         </TabControl>
